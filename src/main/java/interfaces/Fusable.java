@@ -2,6 +2,11 @@ package interfaces;
 
 import pojos.Demon;
 
+/**
+ * Classes implementing this interface will support the ability to verify if a
+ * given {@link Demon} can fuse with the implementor, in addition to computing
+ * which {@link Demon} that particular fusion will result in.
+ */
 public interface Fusable {
 
     /**
