@@ -1,9 +1,11 @@
 package pojos;
 
-import static systems.utility.Helpers.simplePrint;
-
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import interfaces.Fusable;
 import interfaces.Printable;
@@ -62,31 +64,36 @@ public class Demon implements Fusable, Printable {
      */
     private List<String> weak;
     /**
-     * A {@link List} of {@link Skill} representing every ability the demon
-     * will learn as it levels up.
-     */
-    private List<Skill> skills;
-    /**
      * Denotes whether a demon is capable of evolving when reaching a certain
      * level.
      */
     boolean canEvolve;
-
     /**
      * The name of the demon the current will evolve into given a high enough
      * level.
      */
     private String evolutionForm;
-
+    /**
+     * A {@link Map} where the key represents a race/clan that this
+     * {@link Demon} is compatible with for fusions, and the value is the
+     * resulting race/clan that is produced when fused witht the key.
+     */
     private Map<String, String> compatibleClans;
+    /**
+     * A {@link LinkedHashMap} where each key (level) is mapped to a
+     * {@link Set} of {@link Skill} for every level of the current
+     * {@link Demon}. Skills that are innate are mapped to 0.
+     *
+     * TODO Determine whether Gson can handle a LinkedHashMap and what that
+     * looks like when converted from Java -> JSON.
+     */
+    private LinkedHashMap<String, Set<String>> learnset;
 
     @Override
     public void print(){
         System.out.println();
-        StringBuilder sb = new StringBuilder();
-        sb.append("Race: " + name + "   ");
-        sb.append("Level: " + level + "  ");
-        simplePrint(sb.toString());
+        //TODO Flesh out printing of Demon info
+        //TODO Use helpers for sub-sections of info (Affinities, Stats, etc.)
     }
 
     public String getName() {
@@ -209,14 +216,6 @@ public class Demon implements Fusable, Printable {
         this.weak = weak;
     }
 
-    public List<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(List<Skill> skills) {
-        this.skills = skills;
-    }
-
     public boolean isCanEvolve() {
         return canEvolve;
     }
@@ -239,6 +238,19 @@ public class Demon implements Fusable, Printable {
 
     public void setCompatibleClans(Map<String, String> compatibleClans) {
         this.compatibleClans = compatibleClans;
+    }
+
+    public LinkedHashMap<String, Set<String>> getLearnset() {
+        return learnset;
+    }
+
+    public void setLearnset(LinkedHashMap<String, Set<String>> learnset) {
+        this.learnset = learnset;
+    }
+
+    public LinkedHashMap<Integer, Set<Skill>> getDetailedLearnset() {
+        //Implement String -> Skill lookup and rebuild learnset mapping.
+        return null;
     }
 
     @Override
